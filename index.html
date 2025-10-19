@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutomateTask - Free RPA Software</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Configure the Inter font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb; /* Light background */
+            color: #1f2937; /* Dark text */
+        }
+        /* Custom styling for the YouTube iframe (to ensure responsiveness) */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            margin-top: 1.5rem; /* Added margin for separation */
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header / Navigation --><header class="bg-white shadow-md sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <h1 class="text-3xl font-extrabold text-indigo-700">AutomateTask</h1>
+            <div class="flex items-center space-x-4">
+                <!-- Admin Mode Toggle Button --><button id="admin-mode-btn" onclick="toggleAdminMode()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-2 rounded-md text-sm font-medium transition duration-150 shadow-lg">
+                    Manage Content
+                </button>
+                <nav class="hidden md:block">
+                    <a href="#instructions" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navInstructions">Instruction Video</a>
+                    <a href="#use-cases" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navCases">Use Cases</a>
+                    <a href="#download" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navDownload">Download</a>
+                    <a href="#donate" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navDonate">Donate</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Wrapper (Hidden in Admin Mode) --><div id="main-content-wrapper" class="lg:grid lg:grid-cols-[160px_1fr_160px] lg:gap-6 max-w-screen-2xl mx-auto">
+        
+        <!-- Ad 1: Left Column (Desktop Only) --><div id="ad-left" class="hidden lg:block pt-8">
+            <div class="sticky top-20 p-2">
+                <!-- IMPORTANT: REPLACE THIS DIV WITH YOUR GOOGLE AD BANNER CODE (e.g., 160x600) --><div class="bg-gray-300 h-[600px] w-full flex items-center justify-center rounded-lg shadow-md">
+                    <p class="text-xs text-gray-600 text-center p-2">Google AdSense 160x600<br/>(Placeholder)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Central Content Column (Main Website Sections) --><div class="lg:col-span-1">
+            
+            <!-- Hero Section --><section id="download" class="bg-indigo-700 text-white py-20 px-4 sm:px-6 lg:px-8 text-center rounded-b-xl shadow-lg">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-5xl md:text-6xl font-black mb-4 tracking-tight" data-lang-key="heroTitle">
+                        Automate Repetition. Achieve Peak Efficiency.
+                    </h2>
+                    <p class="text-xl mb-8 opacity-90" data-lang-key="heroSubtitle">
+                        We design and deploy intelligent <strong>Robotic Process Automation (RPA)</strong> solutions to eliminate repetitive work, transform operations, and empower your team.
+                    </p>
+                    <!-- Download Link --><a href="#" class="inline-block bg-white text-indigo-700 hover:bg-indigo-100 font-bold py-3 px-10 rounded-full text-lg shadow-2xl transition duration-300 transform hover:scale-105"
+                       onclick="console.log('Download link clicked. Replace # with actual download URL'); return true;" data-lang-key="btnDownload">
+                        Download AutomateTask Now (Free)
+                    </a>
+                    <p class="mt-4 text-sm opacity-70" data-lang-key="noteDownload">
+                        (Click the button above to start your download. Please replace the '#' link with your actual file URL.)
+                    </p>
+                </div>
+            </section>
+            
+            <!-- Instruction Video Section --><section id="instructions" class="py-16 px-4 sm:px-6 lg:px-8 bg-white shadow-inner">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h3 class="text-3xl font-bold text-gray-900 mb-8" data-lang-key="sectionInstructionsTitle">How to Install & Use AutomateTask (Instruction Video)</h3>
+                    
+                    <div class="video-container shadow-2xl">
+                        <!-- Placeholder YouTube Embed for main instructions. REPLACE dQw4w9WgXcQ with your video ID --><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                                title="Main Instruction Video" 
+                                frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-4 italic" data-lang-key="videoInstructionNote">
+                        A step-by-step guide to get you started with creating your first automation bot.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Use Cases Section --><section id="use-cases" class="py-16 md:py-24 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto">
+                    <h3 class="text-4xl font-extrabold text-center mb-16 text-gray-800" data-lang-key="sectionCasesTitle">Example Use Cases</h3>
+
+                    <!-- Container for Dynamically Loaded Use Case Cards --><div id="use-case-cards">
+                        <p id="loading-message" class="text-center text-gray-500">Loading use cases from content file...</p>
+                    </div>
+
+                    <p id="error-message" class="text-center text-red-500 hidden mt-4">
+                        Error loading data. Please ensure the 'content/content.csv' file exists and is correctly formatted.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Donation Section --><section id="donate" class="bg-gray-800 text-white py-16 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h3 class="text-4xl font-extrabold mb-4" data-lang-key="sectionDonateTitle">Support Our Free RPA Tool</h3>
+                    <p class="text-xl mb-8 opacity-80" data-lang-key="sectionDonateSubtitle">
+                        AutomateTask is 100% free and open to everyone. If our application saves you valuable time and you wish to support future development, we greatly appreciate any donation.
+                    </p>
+
+                    <div class="bg-white p-6 inline-block rounded-xl shadow-2xl">
+                        <img src="https://www.paypalobjects.com/webstatic/mktg/logo/pp_cc_mark_74x46.jpg" 
+                            alt="PayPal Logo" 
+                            class="w-36 h-auto mx-auto mb-4 p-2 border border-gray-200 rounded-md">
+                        
+                        <!-- Updated text to reflect PayPal brand --><p class="text-gray-800 font-semibold mb-3" data-lang-key="donateViaPaypal">Donate via PayPal</p>
+                        
+                        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=john.hungphung@gmail.com&item_name=AutomateTask+RPA+Donation" target="_blank"
+                           class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg shadow-md transition duration-150">
+                            Donate Online
+                        </a>
+                        <p class="text-xs text-gray-500 mt-3">(Using PayPal Email: john.hungphung@gmail.com)</p>
+                    </div>
+                    
+                    <p class="mt-8 text-sm opacity-70" data-lang-key="noteDonate">
+                        Your support helps us maintain the app and add more features to the community. Thank you!
+                    </p>
+                </div>
+            </section>
+
+            <!-- NEW: Developer Profile Section -->
+            <section id="developer" class="py-16 px-4 sm:px-6 lg:px-8 bg-white shadow-inner">
+                <div class="max-w-4xl mx-auto text-center">
+                    <h3 class="text-3xl font-bold text-gray-900 mb-6" data-lang-key="sectionDeveloperTitle">About the Developer</h3>
+                    
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-lg border-t-4 border-indigo-500">
+                        <h4 class="text-2xl font-extrabold text-indigo-700 mb-2">Phung Tuan Hung</h4>
+                        <p class="text-gray-600 mb-4" data-lang-key="developerBioPlaceholder">
+                            The creator of AutomateTask is dedicated to building simple, powerful, and free automation tools to help individuals and businesses optimize their workflows. Connect with me on LinkedIn to follow my development journey.
+                        </p>
+                        
+                        <a href="https://www.linkedin.com/in/phung-tuan-hung-9b707b98/" target="_blank"
+                           class="inline-flex items-center text-blue-700 hover:text-blue-900 font-semibold transition duration-150 mt-4">
+                            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <!-- LinkedIn Icon SVG -->
+                                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.765s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.765-1.75 1.765zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.585 7-2.765 7 2.477v6.758z"/>
+                            </svg>
+                            View Phung Tuan Hung's LinkedIn Profile
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Ad 2: Right Column (Desktop Only) --><div id="ad-right" class="hidden lg:block pt-8">
+            <div class="sticky top-20 p-2">
+                <!-- IMPORTANT: REPLACE THIS DIV WITH YOUR GOOGLE AD BANNER CODE (e.g., 160x600) --><div class="bg-gray-300 h-[600px] w-full flex items-center justify-center rounded-lg shadow-md">
+                    <p class="text-xs text-gray-600 text-center p-2">Google AdSense 160x600<br/>(Placeholder)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Main Content Wrapper --><!-- NEW: Admin Panel Section (Hidden by default) --><section id="admin-panel" class="hidden bg-gray-100 min-h-screen py-10">
+        <!-- Content will be injected by renderAdminPanel() --></section>
+
+    <!-- Footer --><footer class="bg-gray-900 text-gray-400 py-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <p data-lang-key="footerCopyright">&copy; <span id="current-year"></span> AutomateTask. Free RPA Software for Everyone.</p>
+            <div class="mt-2 text-sm">
+                <a href="#download" class="hover:text-white mx-2" data-lang-key="navDownload">Download</a> | 
+                <a href="#instructions" class="hover:text-white mx-2" data-lang-key="navInstructions">Instruction Video</a> |
+                <a href="#use-cases" class="hover:text-white mx-2" data-lang-key="navCases">Use Cases</a> |
+                <a href="#donate" class="hover:text-white mx-2" data-lang-key="navDonate">Support Us</a> |
+                <!-- LinkedIn Link --><a href="https://www.linkedin.com/in/phung-tuan-hung-9b707b98/" class="hover:text-white mx-2" target="_blank" data-lang-key="navContact">Contact (LinkedIn)</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Footer Year, Data Loading, and Admin Tool --><script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const translations = {
+            en: {
+                navInstructions: "Instruction Video",
+                navCases: "Use Cases",
+                navDownload: "Download",
+                navDonate: "Donate",
+                navContact: "Contact (LinkedIn)",
+                heroTitle: "Automate Repetition. Achieve Peak Efficiency.",
+                heroSubtitle: 'We design and deploy intelligent <strong>Robotic Process Automation (RPA)</strong> solutions to eliminate repetitive work, transform operations, and empower your team.',
+                btnDownload: "Download AutomateTask Now (Free)",
+                noteDownload: "(Click the button above to start your download. Please replace the '#' link with your actual file URL.)",
+                sectionInstructionsTitle: "How to Install & Use AutomateTask (Instruction Video)",
+                videoInstructionNote: "A step-by-step guide to get you started with creating your first automation bot.",
+                sectionCasesTitle: "Example Use Cases",
+                sectionDonateTitle: "Support Our Free RPA Tool",
+                sectionDonateSubtitle: "AutomateTask is 100% free and open to everyone. If our application saves you valuable time and you wish to support future development, we greatly appreciate any donation.",
+                donateViaPaypal: "Donate via PayPal", // New translation key
+                noteDonate: "Your support helps us maintain the app and add more features to the community. Thank you!",
+                
+                // NEW Developer Section Keys
+                sectionDeveloperTitle: "About the Developer",
+                developerBioPlaceholder: "The creator of AutomateTask is dedicated to building simple, powerful, and free automation tools to help individuals and businesses optimize their workflows. Connect with me on LinkedIn to follow my development journey.",
+
+                footerCopyright: "AutomateTask. Free RPA Software for Everyone.",
+                videoDemoNote: "Video Demo: Please replace the placeholder embed code with your actual YouTube demo link.",
+            }
+        };
+
+        const useCaseCardsContainer = document.getElementById('use-case-cards');
+        const loadingMessage = document.getElementById('loading-message');
+        const errorMessage = document.getElementById('error-message');
+        const mainContentWrapper = document.getElementById('main-content-wrapper');
+
+        // --- LOCAL FILE CONFIGURATION ---
+        const CSV_URL = './content/content.csv';
+
+        let useCaseData = [];
+        let isAdminMode = false;
+
+        // --- ADMIN TOOL FUNCTIONS ---
+        
+        /**
+         * Toggles the visibility between the public website view and the admin editor.
+         */
+        function toggleAdminMode() {
+            isAdminMode = !isAdminMode;
+            const adminPanel = document.getElementById('admin-panel');
+            const adminButton = document.getElementById('admin-mode-btn');
+
+            if (isAdminMode) {
+                adminButton.textContent = 'Exit Editor';
+                adminButton.classList.remove('bg-indigo-500');
+                adminButton.classList.add('bg-red-600');
+                
+                adminPanel.classList.remove('hidden');
+                mainContentWrapper.classList.add('hidden');
+                
+                window.scrollTo(0, 0); // Scroll to top for editor visibility
+                renderAdminPanel();
+            } else {
+                adminButton.textContent = 'Manage Content';
+                adminButton.classList.remove('bg-red-600');
+                adminButton.classList.add('bg-indigo-500');
+                
+                adminPanel.classList.add('hidden');
+                mainContentWrapper.classList.remove('hidden');
+                
+                // Re-render use cases to reflect any unsaved local edits (until CSV is updated)
+                renderUseCases(); 
+            }
+        }
+
+        /**
+         * Renders the editable use case data table in the Admin Panel.
+         */
+        function renderAdminPanel() {
+            const adminPanel = document.getElementById('admin-panel');
+            
+            if (useCaseData.length === 0) {
+                 adminPanel.innerHTML = `<p class="text-center text-red-500 py-16">Cannot load editor: No data was fetched from the CSV file.</p>`;
+                 return;
+            }
+            
+            adminPanel.innerHTML = `
+                <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+                    <h3 class="text-4xl font-extrabold text-indigo-700 mb-6">Content Management Editor</h3>
+                    <p class="text-gray-600 mb-6">
+                        Edit the data below. To make changes permanent, click 
+                        <strong class="text-red-600 font-semibold">"Copy New CSV Data"</strong>, then **manually paste** the entire content over your **\`content/content.csv\`** file.
+                        <br>
+                        <strong class="text-sm text-red-600">Note: Data edited here is NOT saved permanently until you update your local CSV file!</strong>
+                    </p>
+                    
+                    <button id="copy-csv-btn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-150 mb-6">
+                        Copy New CSV Data
+                    </button>
+
+                    <div class="overflow-x-auto bg-white p-4 rounded-xl shadow-lg">
+                        <table id="admin-table" class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title (EN)</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description (EN)</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image URL</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Video ID</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-table-body" class="bg-white divide-y divide-gray-200">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+
+            const tableBody = document.getElementById('admin-table-body');
+            useCaseData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.id = `row-${index}`;
+                
+                // Add fields to the row, linking to the data fields
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${item.ID}</td>
+                    <td class="px-6 py-4">
+                        <input type="text" class="w-full border-gray-300 rounded-md shadow-sm text-sm p-1" data-field="Title_EN" value="${item.Title_EN || ''}">
+                    </td>
+                    <td class="px-6 py-4">
+                        <textarea rows="3" class="w-full border-gray-300 rounded-md shadow-sm text-sm p-1" data-field="Desc_EN">${item.Desc_EN || ''}</textarea>
+                    </td>
+                    <td class="px-6 py-4">
+                        <input type="text" class="w-full border-gray-300 rounded-md shadow-sm text-sm p-1" data-field="Image_URL" value="${item.Image_URL || ''}">
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <input type="text" class="w-full border-gray-300 rounded-md shadow-sm text-sm p-1" data-field="Video_ID" value="${item.Video_ID || ''}">
+                    </td>
+                `;
+                tableBody.appendChild(row);
+                
+                // Add event listeners to update the useCaseData array on input change
+                row.querySelectorAll('[data-field]').forEach(input => {
+                    input.addEventListener('input', (e) => {
+                        const field = e.target.getAttribute('data-field');
+                        useCaseData[index][field] = e.target.value;
+                    });
+                });
+            });
+            
+            document.getElementById('copy-csv-btn').addEventListener('click', copyNewCSV);
+        }
+
+        /**
+         * Serializes the current useCaseData array (including local edits) back into CSV format 
+         * and copies it to the clipboard.
+         */
+        function copyNewCSV() {
+            // Reconstruct all headers, including the unused DE fields, to maintain file structure
+            const headers = ["ID", "Title_EN", "Title_DE", "Desc_EN", "Desc_DE", "Image_URL", "Video_ID"];
+            let csvContent = headers.join(',') + '\n';
+
+            // Function to ensure proper CSV quoting and escaping for fields that might contain commas
+            const quoteAndEscape = (value) => {
+                if (value === undefined || value === null) return ''; // Treat null/undefined as empty string for CSV
+                const str = String(value);
+                // If the string contains comma, newline, or quote, it must be quoted
+                if (str.includes(',') || str.includes('\n') || str.includes('"')) {
+                     // Replace double quotes with escaped double quotes, then wrap in double quotes
+                    return `"${str.replace(/"/g, '""')}"`;
+                }
+                return str;
+            };
+
+            useCaseData.forEach(item => {
+                const newRow = [];
+                headers.forEach(header => {
+                    // Use the item value, which has been updated locally by the editor
+                    newRow.push(quoteAndEscape(item[header]));
+                });
+                csvContent += newRow.join(',') + '\n';
+            });
+
+            // Attempt to copy to clipboard
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(csvContent).then(() => {
+                    const copyButton = document.getElementById('copy-csv-btn');
+                    const originalText = copyButton.textContent;
+                    copyButton.textContent = 'CSV Data Copied to Clipboard!';
+                    copyButton.classList.remove('bg-green-600');
+                    copyButton.classList.add('bg-indigo-600');
+                    
+                    setTimeout(() => {
+                        copyButton.textContent = originalText;
+                        copyButton.classList.remove('bg-indigo-600');
+                        copyButton.classList.add('bg-green-600');
+                    }, 3000);
+                }).catch(err => {
+                    console.error('Could not copy text: ', err);
+                    alert('Failed to copy CSV data automatically. Check console for error. You may need to copy the CSV text manually.');
+                });
+            } else {
+                 alert('Clipboard API not available. Please manually copy the generated CSV data from the console (logged below).');
+                 console.log("Generated CSV Content:\n", csvContent);
+            }
+        }
+        
+        // --- UTILITY FUNCTIONS ---
+
+        /**
+         * Simple CSV parser: Converts CSV text into an array of objects.
+         */
+        function parseCSV(csvText) {
+            const rows = csvText.split('\n').filter(row => row.trim() !== '');
+            if (rows.length === 0) return [];
+
+            const headers = rows[0].split(',').map(header => header.trim());
+            const data = [];
+
+            // A slightly improved split that attempts to handle quoted fields (still basic)
+            const splitCsvRow = (row) => {
+                const results = [];
+                let current = '';
+                let inQuotes = false;
+                for (let i = 0; i < row.length; i++) {
+                    const char = row[i];
+                    if (char === '"') {
+                        // Handle escaped quote (only if inside quotes) or start/end quote
+                        if (inQuotes && row[i + 1] === '"') {
+                            current += '"';
+                            i++; // Skip the next quote
+                        } else {
+                            inQuotes = !inQuotes;
+                        }
+                    } else if (char === ',' && !inQuotes) {
+                        results.push(current.trim());
+                        current = '';
+                    } else {
+                        current += char;
+                    }
+                }
+                results.push(current.trim()); // Push the last value
+                return results.map(v => v.replace(/^"|"$/g, '').replace(/""/g, '"'));
+            };
+
+            for (let i = 1; i < rows.length; i++) {
+                const values = splitCsvRow(rows[i]);
+                if (values.length === headers.length) {
+                    const rowObject = {};
+                    headers.forEach((header, index) => {
+                        rowObject[header] = values[index];
+                    });
+                    data.push(rowObject);
+                } else {
+                    console.warn(`Row ${i + 1} has ${values.length} columns, expected ${headers.length}. Skipping.`, rows[i]);
+                }
+            }
+            return data;
+        }
+
+        /**
+         * Renders the use case cards based on the fetched data (English only).
+         */
+        function renderUseCases() {
+            useCaseCardsContainer.innerHTML = '';
+            
+            if (useCaseData.length === 0) {
+                 useCaseCardsContainer.innerHTML = `<p class="text-center text-gray-500">No use cases found in the CSV file.</p>`;
+                 return;
+            }
+
+            useCaseData.forEach((item, index) => {
+                const caseNumber = index + 1;
+                
+                // Explicitly use English fields
+                const title = item.Title_EN || `Case ${caseNumber} Title (Missing Title_EN in file)`;
+                const description = item.Desc_EN || `Description for case ${caseNumber} (Missing Desc_EN in file)`;
+                // Use the provided Image_URL or fall back to local convention
+                const imageURL = item.Image_URL || `./images/process_${caseNumber}.png`; 
+                const videoID = item.Video_ID || 'dQw4w9WgXcQ'; // Default placeholder video ID
+
+                const cardHTML = `
+                    <div class="bg-white rounded-xl shadow-xl overflow-hidden mb-12">
+                        <div class="p-8 lg:p-12">
+                            <span class="text-sm font-semibold text-indigo-600 uppercase">Use Case ${caseNumber}</span>
+                            <h4 class="text-3xl font-bold text-gray-900 mt-2 mb-4">${title}</h4>
+                            
+                            <!-- 1. Description --><p class="text-gray-600 mb-6 leading-relaxed">${description}</p>
+                            
+                            <!-- 2. Image (Process Picture) --><div class="flex items-center justify-center p-4 my-8 bg-indigo-50 rounded-lg shadow-inner">
+                                <img src="${imageURL}" 
+                                     alt="Diagram of use case ${caseNumber} process" 
+                                     class="rounded-lg shadow-lg border-4 border-white w-full transition duration-500 hover:scale-[1.01]"
+                                     // Fallback points to a generic online placeholder if the local file fails
+                                     onerror="this.onerror=null; this.src='https://placehold.co/800x450/4c4c4c/ffffff?text=Image+Missing:+process_${caseNumber}.png'">
+                            </div>
+
+                            <!-- 3. YouTube Link --><div class="video-container shadow-2xl">
+                                <iframe src="https://www.youtube.com/embed/${videoID}" 
+                                        title="YouTube video player for ${title}" 
+                                        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-3 italic">
+                                ${translations.en.videoDemoNote}
+                            </p>
+                        </div>
+                    </div>
+                `;
+                useCaseCardsContainer.insertAdjacentHTML('beforeend', cardHTML);
+            });
+        }
+        
+        /**
+         * Fetches use case data from the local CSV file.
+         */
+        async function fetchUseCases() {
+            loadingMessage.classList.remove('hidden');
+            errorMessage.classList.add('hidden');
+            useCaseCardsContainer.innerHTML = '';
+            useCaseCardsContainer.appendChild(loadingMessage);
+
+            try {
+                // Fetch from the local path
+                const response = await fetch(CSV_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}. Ensure the file exists at: ${CSV_URL}`);
+                }
+                const csvText = await response.text();
+                
+                // Store the fetched data globally for rendering and editing
+                useCaseData = parseCSV(csvText);
+                
+                if (useCaseData.length === 0) {
+                     if (csvText.length > 0) {
+                        console.warn("CSV data received, but no rows parsed. Check header format.");
+                        errorMessage.textContent = "Error: Data loaded, but structure is incorrect. Ensure headers are: ID, Title_EN, Title_DE, Desc_EN, Desc_DE, Image_URL, Video_ID";
+                        errorMessage.classList.remove('hidden');
+                     } else {
+                        throw new Error("Empty CSV response.");
+                     }
+                }
+
+                loadingMessage.classList.add('hidden');
+                renderUseCases();
+
+            } catch (error) {
+                console.error("Failed to fetch use case data:", error);
+                loadingMessage.classList.add('hidden');
+                errorMessage.textContent = `Failed to load use cases. Error: ${error.message}.`;
+                errorMessage.classList.remove('hidden');
+            }
+        }
+
+        /**
+         * Applies English translations to all fixed UI elements.
+         */
+        function applyTranslations() {
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                const translation = translations.en[key];
+
+                if (key === 'heroSubtitle') {
+                    // Handle inner HTML for strong tags
+                    element.innerHTML = translation;
+                } else {
+                    // Use textContent for plain text/links/buttons
+                    element.textContent = translation;
+                }
+            });
+            document.documentElement.lang = 'en';
+        }
+
+        // --- INITIALIZATION ---
+        window.onload = function() {
+            applyTranslations();
+            fetchUseCases(); // Start fetching dynamic data after initial UI is set
+        };
+
+    </script>
+</body>
+</html>
