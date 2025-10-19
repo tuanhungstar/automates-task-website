@@ -37,17 +37,19 @@
     <!-- Header / Navigation --><header class="bg-white shadow-md sticky top-0 z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <h1 class="text-3xl font-extrabold text-indigo-700">AutomateTask</h1>
-            <div class="flex items-center space-x-4">
-                <!-- Admin Mode Toggle Button --><button id="admin-mode-btn" onclick="toggleAdminMode()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-2 rounded-md text-sm font-medium transition duration-150 shadow-lg">
+            
+            <!-- Combined Navigation and Admin Button (hidden on mobile, flex on desktop) -->
+            <nav class="hidden md:flex items-center space-x-4">
+                <!-- Navigation Links --><a href="#instructions" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navInstructions">Instruction Video</a>
+                <a href="#use-cases" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navCases">Use Cases</a>
+                <a href="#download" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navDownload">Download</a>
+                <a href="#donate" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navDonate">Donate</a>
+                <a href="https://www.linkedin.com/in/phung-tuan-hung-9b707b98/" target="_blank" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navContact">Contact (LinkedIn)</a>
+
+                <!-- Admin Mode Toggle Button (NEW POSITION & onclick handler) --><button id="admin-mode-btn" onclick="promptAdminLogin()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-2 rounded-md text-sm font-medium transition duration-150 shadow-lg">
                     Manage Content
                 </button>
-                <nav class="hidden md:block">
-                    <a href="#instructions" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navInstructions">Instruction Video</a>
-                    <a href="#use-cases" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navCases">Use Cases</a>
-                    <a href="#download" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navDownload">Download</a>
-                    <a href="#donate" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navDonate">Donate</a>
-                </nav>
-            </div>
+            </nav>
         </div>
     </header>
 
@@ -71,8 +73,8 @@
                     <p class="text-xl mb-8 opacity-90" data-lang-key="heroSubtitle">
                         We design and deploy intelligent <strong>Robotic Process Automation (RPA)</strong> solutions to eliminate repetitive work, transform operations, and empower your team.
                     </p>
-                    <!-- Download Link --><a href="#" class="inline-block bg-white text-indigo-700 hover:bg-indigo-100 font-bold py-3 px-10 rounded-full text-lg shadow-2xl transition duration-300 transform hover:scale-105"
-                       onclick="console.log('Download link clicked. Replace # with actual download URL'); return true;" data-lang-key="btnDownload">
+                    <!-- Download Link --><a href="https://github.com/tuanhungstar/automateclick/releases/download/automatetask/automatetask.rar" class="inline-block bg-white text-indigo-700 hover:bg-indigo-100 font-bold py-3 px-10 rounded-full text-lg shadow-2xl transition duration-300 transform hover:scale-105"
+                       onclick="console.log('Download link clicked. Opening GitHub release file.'); return true;" data-lang-key="btnDownload">
                         Download AutomateTask Now (Free)
                     </a>
                     <p class="mt-4 text-sm opacity-70" data-lang-key="noteDownload">
@@ -228,6 +230,36 @@
         let isAdminMode = false;
 
         // --- ADMIN TOOL FUNCTIONS ---
+        
+        /**
+         * Prompts the user for a password before allowing entry into the Admin Panel.
+         * The password is hardcoded for simplicity.
+         */
+        function promptAdminLogin() {
+            // !!! IMPORTANT: CHANGE THIS PASSWORD IMMEDIATELY FOR ANY PUBLIC DEPLOYMENT !!!
+            const ADMIN_PASSWORD = 'AutomateAdmin123'; 
+            
+            // Using window.prompt() to collect input
+            const password = window.prompt("Enter Admin Password:");
+
+            if (password === ADMIN_PASSWORD) {
+                toggleAdminMode();
+            } else if (password !== null) {
+                console.error("Access Denied: Incorrect password entered.");
+                // Provide visual feedback without using alert()
+                const adminButton = document.getElementById('admin-mode-btn');
+                const originalText = adminButton.textContent;
+                adminButton.textContent = 'ACCESS DENIED';
+                adminButton.classList.remove('bg-indigo-500');
+                adminButton.classList.add('bg-red-600');
+
+                setTimeout(() => {
+                    adminButton.textContent = originalText;
+                    adminButton.classList.remove('bg-red-600');
+                    adminButton.classList.add('bg-indigo-500');
+                }, 1500);
+            }
+        }
         
         /**
          * Toggles the visibility between the public website view and the admin editor.
