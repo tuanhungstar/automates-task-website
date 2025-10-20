@@ -13,7 +13,7 @@
             background-color: #f7f9fb; /* Light background */
             color: #1f2937; /* Dark text */
         }
-        /* Custom styling for the YouTube iframe (to ensure responsiveness) */
+        /* Styling for the Video Carousel and Items */
         .video-container {
             position: relative;
             width: 100%;
@@ -21,7 +21,7 @@
             height: 0;
             overflow: hidden;
             border-radius: 0.75rem;
-            margin-top: 1.5rem; /* Added margin for separation */
+            margin-top: 0.5rem; 
         }
         .video-container iframe {
             position: absolute;
@@ -29,6 +29,11 @@
             left: 0;
             width: 100%;
             height: 100%;
+        }
+        .carousel-item {
+            flex: 0 0 100%; /* Each item takes full width of the visible container */
+            scroll-snap-align: start;
+            width: 100%;
         }
     </style>
 </head>
@@ -38,17 +43,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <h1 class="text-3xl font-extrabold text-indigo-700">AutomateTask</h1>
             
-            <!-- Combined Navigation and Admin Button (hidden on mobile, flex on desktop) -->
+            <!-- Combined Navigation (Admin Button removed from here) -->
             <nav class="hidden md:flex items-center space-x-4">
                 <!-- Navigation Links --><a href="#instructions" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navInstructions">Instruction Video</a>
                 <a href="#use-cases" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navCases">Use Cases</a>
                 <a href="#download" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navDownload">Download</a>
                 <a href="#donate" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navDonate">Donate</a>
                 <a href="https://www.linkedin.com/in/phung-tuan-hung-9b707b98/" target="_blank" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navContact">Contact (LinkedIn)</a>
-
-                <!-- Admin Mode Toggle Button (NEW POSITION & onclick handler) --><button id="admin-mode-btn" onclick="promptAdminLogin()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-2 rounded-md text-sm font-medium transition duration-150 shadow-lg">
-                    Manage Content
-                </button>
             </nav>
         </div>
     </header>
@@ -78,21 +79,38 @@
                         Download AutomateTask Now (Free)
                     </a>
                     <p class="mt-4 text-sm opacity-70" data-lang-key="noteDownload">
+                        (Click the button above to start your download. Please replace the '#' link with your actual file URL.)
                     </p>
                 </div>
             </section>
             
-            <!-- Instruction Video Section --><section id="instructions" class="py-16 px-4 sm:px-6 lg:px-8 bg-white shadow-inner">
+            <!-- Instruction Video Section (NOW A CAROUSEL) --><section id="instructions" class="py-16 px-4 sm:px-6 lg:px-8 bg-white shadow-inner">
                 <div class="max-w-4xl mx-auto text-center">
-                    <h3 class="text-3xl font-bold text-gray-900 mb-8" data-lang-key="sectionInstructionsTitle">How to Install & Use AutomateTask (Instruction Video)</h3>
+                    <h3 class="text-3xl font-bold text-gray-900 mb-8" data-lang-key="sectionInstructionsTitle">Video Instructions (Swipe/Scroll to see more)</h3>
                     
-                    <div class="video-container shadow-2xl">
-                        <!-- Placeholder YouTube Embed for main instructions. REPLACE dQw4w9WgXcQ with your video ID --><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                                title="Main Instruction Video" 
-                                frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div class="relative">
+                        <!-- Carousel Wrapper -->
+                        <div id="video-carousel-wrapper" class="overflow-hidden shadow-2xl rounded-xl">
+                            <div id="video-carousel" class="flex snap-x snap-mandatory overflow-x-scroll scroll-smooth space-x-6 pb-4">
+                                <!-- Videos will be dynamically injected here by JS -->
+                            </div>
+                        </div>
+                        
+                        <!-- Navigation Buttons and Dots -->
+                        <div class="flex justify-center items-center space-x-4 mt-6">
+                            <button id="prev-video" class="p-2 rounded-full bg-indigo-500 text-white hover:bg-indigo-600 transition disabled:opacity-50" disabled>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                            </button>
+                            <div id="carousel-dots" class="flex items-center space-x-2">
+                                <!-- Dots injected here -->
+                            </div>
+                            <button id="next-video" class="p-2 rounded-full bg-indigo-500 text-white hover:bg-indigo-600 transition disabled:opacity-50">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </button>
+                        </div>
                     </div>
                     <p class="text-sm text-gray-500 mt-4 italic" data-lang-key="videoInstructionNote">
-                        A step-by-step guide to get you started with creating your first automation bot.
+                        A step-by-step guide to get you started with creating your first automation bot. Swipe left or right to explore all tutorials.
                     </p>
                 </div>
             </section>
@@ -170,7 +188,17 @@
             </div>
         </div>
     </div>
-    <!-- END Main Content Wrapper --><!-- NEW: Admin Panel Section (Hidden by default) --><section id="admin-panel" class="hidden bg-gray-100 min-h-screen py-10">
+    <!-- END Main Content Wrapper -->
+    
+    <!-- Admin Button at the bottom (NEW LOCATION) -->
+    <div class="max-w-7xl mx-auto px-4 py-4 text-right">
+        <button id="admin-mode-btn" onclick="promptAdminLogin()" 
+            class="bg-gray-100 hover:bg-gray-200 text-gray-500 text-xs px-4 py-2 rounded-lg shadow-sm transition duration-150 border border-gray-300">
+            Manage Content
+        </button>
+    </div>
+
+    <!-- NEW: Admin Panel Section (Hidden by default) --><section id="admin-panel" class="hidden bg-gray-100 min-h-screen py-10">
         <!-- Content will be injected by renderAdminPanel() --></section>
 
     <!-- Footer --><footer class="bg-gray-900 text-gray-400 py-8 px-4 sm:px-6 lg:px-8">
@@ -200,8 +228,8 @@
                 heroSubtitle: 'We design and deploy intelligent <strong>Robotic Process Automation (RPA)</strong> solutions to eliminate repetitive work, transform operations, and empower your team.',
                 btnDownload: "Download AutomateTask Now (Free)",
                 noteDownload: "(Click the button above to start your download. Please replace the '#' link with your actual file URL.)",
-                sectionInstructionsTitle: "How to Install & Use AutomateTask (Instruction Video)",
-                videoInstructionNote: "A step-by-step guide to get you started with creating your first automation bot.",
+                sectionInstructionsTitle: "Video Instructions (Swipe/Scroll to see more)",
+                videoInstructionNote: "A step-by-step guide to get you started with creating your first automation bot. Swipe left or right to explore all tutorials.",
                 sectionCasesTitle: "Example Use Cases",
                 sectionDonateTitle: "Support Our Free RPA Tool",
                 sectionDonateSubtitle: "AutomateTask is 100% free and open to everyone. If our application saves you valuable time and you wish to support future development, we greatly appreciate any donation.",
@@ -224,9 +252,144 @@
 
         // --- LOCAL FILE CONFIGURATION ---
         const CSV_URL = './content/content.csv';
+        
+        // --- INSTRUCTION VIDEO DATA (Hardcoded as they are not in the CSV) ---
+        const instructionVideos = [
+            { id: 'dQw4w9WgXcQ', title: '01. Installation and Setup' },
+            { id: 'B6Yw-9eJ514', title: '02. Creating Your First Bot' },
+            { id: 'tgbNymZ7vqY', title: '03. Advanced Data Extraction' },
+            { id: 'jNQXAC9IVRw', title: '04. Scheduling Your Automation' }
+        ];
 
         let useCaseData = [];
         let isAdminMode = false;
+
+        // --- CAROUSEL LOGIC ---
+        let currentVideoIndex = 0;
+        
+        /**
+         * Renders the video carousel and sets up navigation listeners.
+         */
+        function renderInstructionVideos() {
+            const carousel = document.getElementById('video-carousel');
+            const dotsContainer = document.getElementById('carousel-dots');
+            carousel.innerHTML = '';
+            dotsContainer.innerHTML = '';
+            
+            instructionVideos.forEach((video, index) => {
+                // 1. Create the video item
+                const item = document.createElement('div');
+                item.className = 'carousel-item shrink-0 relative'; // Use shrink-0 to prevent shrinking
+                item.dataset.index = index;
+                
+                item.innerHTML = `
+                    <p class="text-sm font-semibold text-gray-700 mb-2">${video.title}</p>
+                    <div class="video-container shadow-2xl">
+                        <iframe src="https://www.youtube.com/embed/${video.id}" 
+                                title="${video.title}" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen></iframe>
+                    </div>
+                `;
+                carousel.appendChild(item);
+
+                // 2. Create the pagination dot
+                const dot = document.createElement('button');
+                dot.className = 'w-3 h-3 rounded-full bg-gray-300 transition-colors duration-200';
+                dot.onclick = () => scrollToVideo(index);
+                dotsContainer.appendChild(dot);
+            });
+            
+            // Set up event listeners for buttons
+            document.getElementById('prev-video').onclick = () => scrollCarousel(-1);
+            document.getElementById('next-video').onclick = () => scrollCarousel(1);
+            
+            // Initial state update
+            updateCarouselState();
+
+            // Add scroll event listener to update dots/buttons when user swipes/scrolls manually
+            carousel.addEventListener('scroll', debounce(updateCarouselState, 100));
+        }
+        
+        /**
+         * Smoothly scrolls the carousel to the given index.
+         */
+        function scrollToVideo(index) {
+            const carousel = document.getElementById('video-carousel');
+            const item = carousel.querySelector(`[data-index="${index}"]`);
+            if (item) {
+                // Calculate the scroll position needed to snap the item to the start
+                const scrollLeft = item.offsetLeft - (carousel.offsetLeft - carousel.scrollLeft) - 24; // Account for the space-x-6 margin (1.5rem * 16px = 24px)
+                
+                carousel.scrollTo({
+                    left: scrollLeft,
+                    behavior: 'smooth'
+                });
+                currentVideoIndex = index;
+                updateCarouselState();
+            }
+        }
+        
+        /**
+         * Updates the navigation buttons (enabled/disabled) and pagination dots (active).
+         */
+        function updateCarouselState() {
+            const carousel = document.getElementById('video-carousel');
+            const prevBtn = document.getElementById('prev-video');
+            const nextBtn = document.getElementById('next-video');
+            const dots = document.getElementById('carousel-dots').children;
+
+            if (!carousel || !dots.length) return;
+
+            // Determine the current visible slide by scroll position
+            const scrollPos = carousel.scrollLeft;
+            const itemWidth = carousel.querySelector('.carousel-item').offsetWidth + 24; // Item width + space-x-6
+
+            // Determine current index based on scroll position (round to nearest)
+            currentVideoIndex = Math.round(scrollPos / itemWidth);
+            if (currentVideoIndex < 0) currentVideoIndex = 0;
+            if (currentVideoIndex >= instructionVideos.length) currentVideoIndex = instructionVideos.length - 1;
+
+            // Update navigation buttons
+            prevBtn.disabled = currentVideoIndex === 0;
+            nextBtn.disabled = currentVideoIndex === instructionVideos.length - 1;
+
+            // Update dots
+            Array.from(dots).forEach((dot, index) => {
+                if (index === currentVideoIndex) {
+                    dot.classList.remove('bg-gray-300');
+                    dot.classList.add('bg-indigo-600');
+                } else {
+                    dot.classList.remove('bg-indigo-600');
+                    dot.classList.add('bg-gray-300');
+                }
+            });
+        }
+
+        /**
+         * Scrolls the carousel one step in the given direction (-1 for previous, 1 for next).
+         */
+        function scrollCarousel(direction) {
+            const newIndex = currentVideoIndex + direction;
+            if (newIndex >= 0 && newIndex < instructionVideos.length) {
+                scrollToVideo(newIndex);
+            }
+        }
+
+        /**
+         * Debounce utility function.
+         */
+        function debounce(func, delay) {
+            let timeout;
+            return function() {
+                const context = this;
+                const args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), delay);
+            };
+        }
+
 
         // --- ADMIN TOOL FUNCTIONS ---
         
@@ -248,14 +411,19 @@
                 // Provide visual feedback without using alert()
                 const adminButton = document.getElementById('admin-mode-btn');
                 const originalText = adminButton.textContent;
+                
+                // Save current style to restore later
+                const originalClasses = adminButton.className;
+                
                 adminButton.textContent = 'ACCESS DENIED';
-                adminButton.classList.remove('bg-indigo-500');
-                adminButton.classList.add('bg-red-600');
+                // Apply denial style
+                adminButton.classList.remove('bg-gray-100', 'text-gray-500', 'border-gray-300');
+                adminButton.classList.add('bg-red-600', 'text-white', 'shadow-lg');
 
                 setTimeout(() => {
                     adminButton.textContent = originalText;
-                    adminButton.classList.remove('bg-red-600');
-                    adminButton.classList.add('bg-indigo-500');
+                    // Restore original subtle styles
+                    adminButton.className = originalClasses;
                 }, 1500);
             }
         }
@@ -270,8 +438,9 @@
 
             if (isAdminMode) {
                 adminButton.textContent = 'Exit Editor';
-                adminButton.classList.remove('bg-indigo-500');
-                adminButton.classList.add('bg-red-600');
+                // Apply active editor styles (prominent red)
+                adminButton.classList.remove('bg-gray-100', 'text-gray-500', 'border-gray-300', 'shadow-sm', 'text-xs');
+                adminButton.classList.add('bg-red-600', 'text-white', 'shadow-lg', 'text-sm');
                 
                 adminPanel.classList.remove('hidden');
                 mainContentWrapper.classList.add('hidden');
@@ -280,8 +449,9 @@
                 renderAdminPanel();
             } else {
                 adminButton.textContent = 'Manage Content';
-                adminButton.classList.remove('bg-red-600');
-                adminButton.classList.add('bg-indigo-500');
+                // Revert to subtle styles
+                adminButton.classList.remove('bg-red-600', 'text-white', 'shadow-lg', 'text-sm');
+                adminButton.classList.add('bg-gray-100', 'text-gray-500', 'border-gray-300', 'shadow-sm', 'text-xs');
                 
                 adminPanel.classList.add('hidden');
                 mainContentWrapper.classList.remove('hidden');
@@ -415,10 +585,23 @@
                     }, 3000);
                 }).catch(err => {
                     console.error('Could not copy text: ', err);
-                    alert('Failed to copy CSV data automatically. Check console for error. You may need to copy the CSV text manually.');
+                    // Use a fallback message box instead of alert()
+                    const fallbackMessage = document.createElement('div');
+                    fallbackMessage.textContent = 'Failed to copy CSV data automatically. Please check the console for the generated text to copy manually.';
+                    fallbackMessage.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-lg shadow-xl z-50';
+                    document.body.appendChild(fallbackMessage);
+                    setTimeout(() => document.body.removeChild(fallbackMessage), 5000);
+
+                    console.log("Generated CSV Content:\n", csvContent);
                 });
             } else {
-                 alert('Clipboard API not available. Please manually copy the generated CSV data from the console (logged below).');
+                 // Use a fallback message box instead of alert()
+                 const fallbackMessage = document.createElement('div');
+                 fallbackMessage.textContent = 'Clipboard API not available. Please manually copy the generated CSV data from the console (logged below).';
+                 fallbackMessage.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-500 text-white p-4 rounded-lg shadow-xl z-50';
+                 document.body.appendChild(fallbackMessage);
+                 setTimeout(() => document.body.removeChild(fallbackMessage), 5000);
+
                  console.log("Generated CSV Content:\n", csvContent);
             }
         }
@@ -592,9 +775,9 @@
         window.onload = function() {
             applyTranslations();
             fetchUseCases(); // Start fetching dynamic data after initial UI is set
+            renderInstructionVideos(); // Render video carousel
         };
 
     </script>
 </body>
 </html>
-
