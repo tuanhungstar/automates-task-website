@@ -49,6 +49,11 @@
                 <a href="#download" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navDownload">Download</a>
                 <a href="#donate" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navDonate">Donate</a>
                 <a href="https://www.linkedin.com/in/phung-tuan-hung-9b707b98/" target="_blank" class="text-gray-600 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-150" data-lang-key="navContact">Contact (LinkedIn)</a>
+            
+                <div class="flex items-center space-x-1 ml-4 border-l pl-4 border-gray-200">
+                    <button id="lang-en" class="text-sm font-bold text-white px-3 py-1 rounded-md bg-indigo-600" data-lang="en">EN</button>
+                    <button id="lang-de" class="text-sm font-medium text-gray-500 hover:text-indigo-600 px-3 py-1 rounded-md" data-lang="de">DE</button>
+                </div>
             </nav>
         </div>
     </header>
@@ -207,6 +212,7 @@
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
+        // UPDATED: Added 'de' translations
         const translations = {
             en: {
                 navInstructions: "Instruction Video",
@@ -223,15 +229,34 @@
                 sectionCasesTitle: "Example Use Cases",
                 sectionDonateTitle: "Support Our Free RPA Tool",
                 sectionDonateSubtitle: "AutomateTask is 100% free and open to everyone. If our application saves you valuable time and you wish to support future development, we greatly appreciate any donation.",
-                donateViaPaypal: "Donate via PayPal", // New translation key
+                donateViaPaypal: "Donate via PayPal",
                 noteDonate: "Your support helps us maintain the app and add more features to the community. Thank you!",
-                
-                // NEW Developer Section Keys
                 sectionDeveloperTitle: "About the Developer",
                 developerBioPlaceholder: "The creator of AutomateTask is dedicated to building simple, powerful, and free automation tools to help individuals and businesses optimize their workflows. Connect with me on LinkedIn to follow my development journey.",
-
                 footerCopyright: "AutomateTask. Free RPA Software for Everyone.",
                 videoDemoNote: "Video Demo: Please replace the placeholder embed code with your actual YouTube demo link.",
+            },
+            de: {
+                navInstructions: "Anleitungsvideo",
+                navCases: "Anwendungsfälle",
+                navDownload: "Herunterladen",
+                navDonate: "Spenden",
+                navContact: "Kontakt (LinkedIn)",
+                heroTitle: "Wiederholungen automatisieren. Effizienz erreichen.",
+                heroSubtitle: 'Wir entwerfen und implementieren intelligente <strong>Robotic Process Automation (RPA)</strong>-Lösungen, um repetitive Arbeit zu eliminieren, Abläufe zu transformieren und Ihr Team zu stärken.',
+                btnDownload: "AutomateTask jetzt kostenlos herunterladen",
+                noteDownload: "(Klicken Sie auf die Schaltfläche oben, um den Download zu starten. Bitte ersetzen Sie den '#'-Link durch Ihre tatsächliche Datei-URL.)",
+                sectionInstructionsTitle: "Videoanleitungen (Wischen/Scrollen für mehr)",
+                videoInstructionNote: "Eine Schritt-für-Schritt-Anleitung für die Erstellung Ihres ersten Automatisierungs-Bots. Wischen Sie nach links oder rechts, um alle Tutorials zu entdecken.",
+                sectionCasesTitle: "Anwendungsbeispiele",
+                sectionDonateTitle: "Unterstützen Sie unser kostenloses RPA-Tool",
+                sectionDonateSubtitle: "AutomateTask ist 100% kostenlos und für jeden zugänglich. Wenn unsere Anwendung Ihnen wertvolle Zeit spart und Sie die zukünftige Entwicklung unterstützen möchten, freuen wir uns über jede Spende.",
+                donateViaPaypal: "Spenden über PayPal",
+                noteDonate: "Ihre Unterstützung hilft uns, die App zu warten und der Community weitere Funktionen hinzuzufügen. Vielen Dank!",
+                sectionDeveloperTitle: "Über den Entwickler",
+                developerBioPlaceholder: "Der Schöpfer von AutomateTask widmet sich der Entwicklung einfacher, leistungsstarker und kostenloser Automatisierungstools, die Einzelpersonen und Unternehmen bei der Optimierung ihrer Arbeitsabläufe unterstützen. Vernetzen Sie sich mit mir auf LinkedIn, um meine Entwicklungsreise zu verfolgen.",
+                footerCopyright: "AutomateTask. Kostenlose RPA-Software für alle.",
+                videoDemoNote: "Video-Demo: Bitte ersetzen Sie den Platzhalter-Embed-Code durch Ihren tatsächlichen YouTube-Demo-Link.",
             }
         };
 
@@ -241,27 +266,23 @@
         const mainContentWrapper = document.getElementById('main-content-wrapper');
 
         // --- LOCAL FILE CONFIGURATION ---
-        // UPDATED to load JSON instead of CSV
         const JSON_URL = './content/content.json';
         
-        // --- INSTRUCTION VIDEO DATA (Hardcoded as they are not in the CSV) ---
+        // --- INSTRUCTION VIDEO DATA ---
         const instructionVideos = [
-            { id: 'uHqPYQSFwGM', title: '00. Animation' },
-            { id: 'uHqPYQSFwGM', title: '01. Installation and Setup' },
+            { id: 'dQw4w9WgXcQ', title: '01. Installation and Setup' },
             { id: 'B6Yw-9eJ514', title: '02. Creating Your First Bot' },
-            { id: 'uHqPYQSFwGM', title: '03. Advanced Data Extraction' },
-            { id: 'uHqPYQSFwGM', title: '04. Scheduling Your Automation' }
+            { id: 'tgbNymZ7vqY', title: '03. Advanced Data Extraction' },
+            { id: 'jNQXAC9IVRw', title: '04. Scheduling Your Automation' }
         ];
 
         let useCaseData = [];
         let isAdminMode = false;
+        let currentLang = 'en'; // NEW: Global language state
 
         // --- CAROUSEL LOGIC ---
         let currentVideoIndex = 0;
         
-        /**
-         * Renders the video carousel and sets up navigation listeners.
-         */
         function renderInstructionVideos() {
             const carousel = document.getElementById('video-carousel');
             const dotsContainer = document.getElementById('carousel-dots');
@@ -269,9 +290,8 @@
             dotsContainer.innerHTML = '';
             
             instructionVideos.forEach((video, index) => {
-                // 1. Create the video item
                 const item = document.createElement('div');
-                item.className = 'carousel-item shrink-0 relative'; // Use shrink-0 to prevent shrinking
+                item.className = 'carousel-item shrink-0 relative';
                 item.dataset.index = index;
                 
                 item.innerHTML = `
@@ -286,34 +306,24 @@
                 `;
                 carousel.appendChild(item);
 
-                // 2. Create the pagination dot
                 const dot = document.createElement('button');
                 dot.className = 'w-3 h-3 rounded-full bg-gray-300 transition-colors duration-200';
                 dot.onclick = () => scrollToVideo(index);
                 dotsContainer.appendChild(dot);
             });
             
-            // Set up event listeners for buttons
             document.getElementById('prev-video').onclick = () => scrollCarousel(-1);
             document.getElementById('next-video').onclick = () => scrollCarousel(1);
             
-            // Initial state update
             updateCarouselState();
-
-            // Add scroll event listener to update dots/buttons when user swipes/scrolls manually
             carousel.addEventListener('scroll', debounce(updateCarouselState, 100));
         }
         
-        /**
-         * Smoothly scrolls the carousel to the given index.
-         */
         function scrollToVideo(index) {
             const carousel = document.getElementById('video-carousel');
             const item = carousel.querySelector(`[data-index="${index}"]`);
             if (item) {
-                // Calculate the scroll position needed to snap the item to the start
-                const scrollLeft = item.offsetLeft - (carousel.offsetLeft - carousel.scrollLeft) - 24; // Account for the space-x-6 margin (1.5rem * 16px = 24px)
-                
+                const scrollLeft = item.offsetLeft - (carousel.offsetLeft - carousel.scrollLeft) - 24;
                 carousel.scrollTo({
                     left: scrollLeft,
                     behavior: 'smooth'
@@ -323,9 +333,6 @@
             }
         }
         
-        /**
-         * Updates the navigation buttons (enabled/disabled) and pagination dots (active).
-         */
         function updateCarouselState() {
             const carousel = document.getElementById('video-carousel');
             const prevBtn = document.getElementById('prev-video');
@@ -334,20 +341,16 @@
 
             if (!carousel || !dots.length) return;
 
-            // Determine the current visible slide by scroll position
             const scrollPos = carousel.scrollLeft;
-            const itemWidth = carousel.querySelector('.carousel-item').offsetWidth + 24; // Item width + space-x-6
+            const itemWidth = carousel.querySelector('.carousel-item').offsetWidth + 24; 
 
-            // Determine current index based on scroll position (round to nearest)
             currentVideoIndex = Math.round(scrollPos / itemWidth);
             if (currentVideoIndex < 0) currentVideoIndex = 0;
             if (currentVideoIndex >= instructionVideos.length) currentVideoIndex = instructionVideos.length - 1;
 
-            // Update navigation buttons
             prevBtn.disabled = currentVideoIndex === 0;
             nextBtn.disabled = currentVideoIndex === instructionVideos.length - 1;
 
-            // Update dots
             Array.from(dots).forEach((dot, index) => {
                 if (index === currentVideoIndex) {
                     dot.classList.remove('bg-gray-300');
@@ -359,9 +362,6 @@
             });
         }
 
-        /**
-         * Scrolls the carousel one step in the given direction (-1 for previous, 1 for next).
-         */
         function scrollCarousel(direction) {
             const newIndex = currentVideoIndex + direction;
             if (newIndex >= 0 && newIndex < instructionVideos.length) {
@@ -369,9 +369,6 @@
             }
         }
 
-        /**
-         * Debounce utility function.
-         */
         function debounce(func, delay) {
             let timeout;
             return function() {
@@ -385,44 +382,29 @@
 
         // --- ADMIN TOOL FUNCTIONS ---
         
-        /**
-         * Prompts the user for a password before allowing entry into the Admin Panel.
-         * The password is hardcoded for simplicity.
-         */
         function promptAdminLogin() {
-            // !!! IMPORTANT: CHANGE THIS PASSWORD IMMEDIATELY FOR ANY PUBLIC DEPLOYMENT !!!
             const ADMIN_PASSWORD = 'AutomateAdmin123'; 
-            
-            // Using window.prompt() to collect input
             const password = window.prompt("Enter Admin Password:");
 
             if (password === ADMIN_PASSWORD) {
                 toggleAdminMode();
             } else if (password !== null) {
                 console.error("Access Denied: Incorrect password entered.");
-                // Provide visual feedback without using alert()
                 const adminButton = document.getElementById('admin-mode-btn');
                 const originalText = adminButton.textContent;
-                
-                // Save current style to restore later
                 const originalClasses = adminButton.className;
                 
                 adminButton.textContent = 'ACCESS DENIED';
-                // Apply denial style
                 adminButton.classList.remove('bg-gray-100', 'text-gray-500', 'border-gray-300');
                 adminButton.classList.add('bg-red-600', 'text-white', 'shadow-lg');
 
                 setTimeout(() => {
                     adminButton.textContent = originalText;
-                    // Restore original subtle styles
                     adminButton.className = originalClasses;
                 }, 1500);
             }
         }
         
-        /**
-         * Toggles the visibility between the public website view and the admin editor.
-         */
         function toggleAdminMode() {
             isAdminMode = !isAdminMode;
             const adminPanel = document.getElementById('admin-panel');
@@ -430,31 +412,28 @@
 
             if (isAdminMode) {
                 adminButton.textContent = 'Exit Editor';
-                // Apply active editor styles (prominent red)
                 adminButton.classList.remove('bg-gray-100', 'text-gray-500', 'border-gray-300', 'shadow-sm', 'text-xs');
                 adminButton.classList.add('bg-red-600', 'text-white', 'shadow-lg', 'text-sm');
                 
                 adminPanel.classList.remove('hidden');
                 mainContentWrapper.classList.add('hidden');
                 
-                window.scrollTo(0, 0); // Scroll to top for editor visibility
+                window.scrollTo(0, 0); 
                 renderAdminPanel();
             } else {
                 adminButton.textContent = 'Manage Content';
-                // Revert to subtle styles
                 adminButton.classList.remove('bg-red-600', 'text-white', 'shadow-lg', 'text-sm');
                 adminButton.classList.add('bg-gray-100', 'text-gray-500', 'border-gray-300', 'shadow-sm', 'text-xs');
                 
                 adminPanel.classList.add('hidden');
                 mainContentWrapper.classList.remove('hidden');
                 
-                // Re-render use cases to reflect any unsaved local edits (until CSV is updated)
                 renderUseCases(); 
             }
         }
 
         /**
-         * Renders the editable use case data table in the Admin Panel.
+         * UPDATED: Renders the admin panel with EN and DE fields.
          */
         function renderAdminPanel() {
             const adminPanel = document.getElementById('admin-panel');
@@ -464,7 +443,6 @@
                  return;
             }
             
-            // UPDATED Admin Panel text to refer to JSON
             adminPanel.innerHTML = `
                 <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
                     <h3 class="text-4xl font-extrabold text-indigo-700 mb-6">Content Management Editor</h3>
@@ -485,7 +463,9 @@
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title (EN)</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title (DE)</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description (EN)</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description (DE)</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image URL</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Video ID</th>
                                 </tr>
@@ -502,14 +482,19 @@
                 const row = document.createElement('tr');
                 row.id = `row-${index}`;
                 
-                // Add fields to the row, linking to the data fields
                 row.innerHTML = `
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${item.ID}</td>
                     <td class="px-6 py-4">
                         <input type="text" class="w-full border-gray-300 rounded-md shadow-sm text-sm p-1" data-field="Title_EN" value="${item.Title_EN || ''}">
                     </td>
                     <td class="px-6 py-4">
+                        <input type="text" class="w-full border-gray-300 rounded-md shadow-sm text-sm p-1" data-field="Title_DE" value="${item.Title_DE || ''}">
+                    </td>
+                    <td class="px-6 py-4">
                         <textarea rows="3" class="w-full border-gray-300 rounded-md shadow-sm text-sm p-1" data-field="Desc_EN">${item.Desc_EN || ''}</textarea>
+                    </td>
+                    <td class="px-6 py-4">
+                        <textarea rows="3" class="w-full border-gray-300 rounded-md shadow-sm text-sm p-1" data-field="Desc_DE">${item.Desc_DE || ''}</textarea>
                     </td>
                     <td class="px-6 py-4">
                         <input type="text" class="w-full border-gray-300 rounded-md shadow-sm text-sm p-1" data-field="Image_URL" value="${item.Image_URL || ''}">
@@ -520,7 +505,6 @@
                 `;
                 tableBody.appendChild(row);
                 
-                // Add event listeners to update the useCaseData array on input change
                 row.querySelectorAll('[data-field]').forEach(input => {
                     input.addEventListener('input', (e) => {
                         const field = e.target.getAttribute('data-field');
@@ -529,50 +513,34 @@
                 });
             });
             
-            // UPDATED to listen for new button ID and call new function
             document.getElementById('copy-json-btn').addEventListener('click', copyNewJSON);
         }
 
         /**
-         * NEW FUNCTION
-         * Serializes the current useCaseData array (including local edits) back into JSON format 
-         * and copies it to the clipboard.
+         * Serializes and copies JSON data to clipboard.
          */
         function copyNewJSON() {
-            // Convert the data array to a nicely formatted JSON string
-            const jsonContent = JSON.stringify(useCaseData, null, 2); // 'null, 2' adds pretty-printing
+            const jsonContent = JSON.stringify(useCaseData, null, 2); 
 
-            // Attempt to copy to clipboard
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(jsonContent).then(() => {
                     const copyButton = document.getElementById('copy-json-btn');
-                    const originalText = copyButton.textContent;
                     copyButton.textContent = 'JSON Data Copied to Clipboard!';
                     copyButton.classList.remove('bg-green-600');
                     copyButton.classList.add('bg-indigo-600');
                     
                     setTimeout(() => {
-                        copyButton.textContent = 'Copy New JSON Data'; // Reset text
+                        copyButton.textContent = 'Copy New JSON Data'; 
                         copyButton.classList.remove('bg-indigo-600');
                         copyButton.classList.add('bg-green-600');
                     }, 3000);
                 }).catch(err => {
                     console.error('Could not copy text: ', err);
-                    const fallbackMessage = document.createElement('div');
-                    fallbackMessage.textContent = 'Failed to copy JSON data automatically. Please check the console for the generated text to copy manually.';
-                    fallbackMessage.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-red-500 text-white p-4 rounded-lg shadow-xl z-50';
-                    document.body.appendChild(fallbackMessage);
-                    setTimeout(() => document.body.removeChild(fallbackMessage), 5000);
-
+                    alert('Failed to copy. See console for data.');
                     console.log("Generated JSON Content:\n", jsonContent);
                 });
             } else {
-                 const fallbackMessage = document.createElement('div');
-                 fallbackMessage.textContent = 'Clipboard API not available. Please manually copy the generated JSON data from the console (logged below).';
-                 fallbackMessage.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-500 text-white p-4 rounded-lg shadow-xl z-50';
-                 document.body.appendChild(fallbackMessage);
-                 setTimeout(() => document.body.removeChild(fallbackMessage), 5000);
-
+                 alert('Clipboard API not available. See console for data.');
                  console.log("Generated JSON Content:\n", jsonContent);
             }
         }
@@ -580,11 +548,7 @@
         // --- UTILITY FUNCTIONS ---
 
         /**
-         * DELETED: parseCSV function was removed.
-         */
-
-        /**
-         * Renders the use case cards based on the fetched data (English only).
+         * UPDATED: Renders use cases based on the currentLanguage.
          */
         function renderUseCases() {
             useCaseCardsContainer.innerHTML = '';
@@ -594,15 +558,19 @@
                  return;
             }
 
+            const langKey = currentLang.toUpperCase(); // 'EN' or 'DE'
+            const fallbackLangKey = 'EN'; // Default to English if translation is missing
+
             useCaseData.forEach((item, index) => {
                 const caseNumber = index + 1;
                 
-                // Explicitly use English fields
-                const title = item.Title_EN || `Case ${caseNumber} Title (Missing Title_EN in file)`;
-                const description = item.Desc_EN || `Description for case ${caseNumber} (Missing Desc_EN in file)`;
-                // Use the provided Image_URL or fall back to local convention
+                // Use dynamic language keys
+                const title = item[`Title_${langKey}`] || item[`Title_${fallbackLangKey}`] || `Case ${caseNumber} Title (Missing Title in file)`;
+                const description = item[`Desc_${langKey}`] || item[`Desc_${fallbackLangKey}`] || `Description for case ${caseNumber} (Missing Desc in file)`;
+                
                 const imageURL = item.Image_URL || `./images/process_${caseNumber}.png`; 
-                const videoID = item.Video_ID || 'dQw4w9WgXcQ'; // Default placeholder video ID
+                const videoID = item.Video_ID || 'dQw4w9WgXcQ';
+                const videoNote = translations[currentLang].videoDemoNote; // Get translated note
 
                 const cardHTML = `
                     <div class="bg-white rounded-xl shadow-xl overflow-hidden mb-12">
@@ -616,7 +584,6 @@
                                 <img src="${imageURL}" 
                                      alt="Diagram of use case ${caseNumber} process" 
                                      class="rounded-lg shadow-lg border-4 border-white w-full transition duration-500 hover:scale-[1.01]"
-                                     // Fallback points to a generic online placeholder if the local file fails
                                      onerror="this.onerror=null; this.src='https://placehold.co/800x450/4c4c4c/ffffff?text=Image+Missing:+process_${caseNumber}.png'">
                             </div>
 
@@ -626,7 +593,7 @@
                                         frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             </div>
                             <p class="text-xs text-gray-500 mt-3 italic">
-                                ${translations.en.videoDemoNote}
+                                ${videoNote}
                             </p>
                         </div>
                     </div>
@@ -636,7 +603,7 @@
         }
         
         /**
-         * UPDATED: Fetches use case data from the local JSON file.
+         * Fetches use case data from the local JSON file.
          */
         async function fetchUseCases() {
             loadingMessage.classList.remove('hidden');
@@ -645,21 +612,19 @@
             useCaseCardsContainer.appendChild(loadingMessage);
 
             try {
-                // Fetch from the local path
-                const response = await fetch(JSON_URL); // CHANGED
+                const response = await fetch(JSON_URL);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}. Ensure the file exists at: ${JSON_URL}`);
                 }
                 
-                // Store the fetched data globally for rendering and editing
-                useCaseData = await response.json(); // CHANGED
+                useCaseData = await response.json(); 
                 
                 if (useCaseData.length === 0) {
                     throw new Error("Empty JSON response or empty array.");
                 }
 
                 loadingMessage.classList.add('hidden');
-                renderUseCases();
+                renderUseCases(); // Render with default language
 
             } catch (error) {
                 console.error("Failed to fetch use case data:", error);
@@ -670,32 +635,68 @@
         }
 
         /**
-         * Applies English translations to all fixed UI elements.
+         * UPDATED: Applies translations based on the global currentLang.
          */
         function applyTranslations() {
+            const lang = currentLang;
+            document.documentElement.lang = lang;
+            const translation = translations[lang];
+
             document.querySelectorAll('[data-lang-key]').forEach(element => {
                 const key = element.getAttribute('data-lang-key');
-                const translation = translations.en[key];
+                const translatedText = translation[key];
 
-                if (key === 'heroSubtitle') {
-                    // Handle inner HTML for strong tags
-                    element.innerHTML = translation;
-                } else {
-                    // Use textContent for plain text/links/buttons
-                    element.textContent = translation;
+                if (translatedText) {
+                    if (key === 'heroSubtitle') {
+                        element.innerHTML = translatedText;
+                    } else {
+                        element.textContent = translatedText;
+                    }
                 }
             });
-            document.documentElement.lang = 'en';
+        }
+
+        /**
+         * NEW: Switches the language of the website.
+         */
+        function switchLanguage(lang) {
+            if (lang === currentLang || !translations[lang]) return;
+            currentLang = lang;
+            
+            // Update button styles
+            const enBtn = document.getElementById('lang-en');
+            const deBtn = document.getElementById('lang-de');
+            
+            if (lang === 'de') {
+                deBtn.classList.add('bg-indigo-600', 'text-white', 'font-bold');
+                deBtn.classList.remove('text-gray-500', 'font-medium', 'hover:text-indigo-600');
+                
+                enBtn.classList.add('text-gray-500', 'font-medium', 'hover:text-indigo-600');
+                enBtn.classList.remove('bg-indigo-600', 'text-white', 'font-bold');
+            } else {
+                enBtn.classList.add('bg-indigo-600', 'text-white', 'font-bold');
+                enBtn.classList.remove('text-gray-500', 'font-medium', 'hover:text-indigo-600');
+                
+                deBtn.classList.add('text-gray-500', 'font-medium', 'hover:text-indigo-600');
+                deBtn.classList.remove('bg-indigo-600', 'text-white', 'font-bold');
+            }
+
+            // Re-render all text content
+            applyTranslations();
+            renderUseCases(); // Re-render dynamic content
         }
 
         // --- INITIALIZATION ---
         window.onload = function() {
-            applyTranslations();
-            fetchUseCases(); // Start fetching dynamic data after initial UI is set
+            // NEW: Add language button listeners
+            document.getElementById('lang-en').addEventListener('click', () => switchLanguage('en'));
+            document.getElementById('lang-de').addEventListener('click', () => switchLanguage('de'));
+
+            applyTranslations(); // Apply default language
+            fetchUseCases(); // Start fetching dynamic data
             renderInstructionVideos(); // Render video carousel
         };
 
     </script>
 </body>
 </html>
-
