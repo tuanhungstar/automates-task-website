@@ -6,7 +6,7 @@
     "Desc_EN": "Der Bot liest den Inhalt der Excel-Datei und listet die Geschäftspartner auf, die in SAP GTS gesperrt werden müssen. Melden Sie sich bei SAP GTS an, geben Sie den Tcode und die Geschäftspartnernummer ein, um sie im System zu finden, fügen Sie sie mit Begründung zur Negativliste hinzu und speichern Sie. Der Bot führt diesen Schritt bis zum Ende der Excel-Datei durch.",
     "Desc_DE": "",
     "Image_URL": "images/process_1.png",
-    "Video_ID": -rIv3LZgMDU
+    "Video_ID": "-rIv3LZgMDU"
   },
   {
     "ID": "2",
