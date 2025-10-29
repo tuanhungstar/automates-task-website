@@ -332,7 +332,7 @@
             const carousel = document.getElementById('video-carousel');
             const item = carousel.querySelector(`[data-index="${index}"]`);
             if (item) {
-                const scrollLeft = item.offsetLeft - (carousel.offsetLeft - carousel.scrollLeft) - 24;
+                const scrollLeft = item.offsetLeft;
                 carousel.scrollTo({
                     left: scrollLeft,
                     behavior: 'smooth'
@@ -709,6 +709,7 @@
     </script>
 </body>
 </html>
+
 
 
 
