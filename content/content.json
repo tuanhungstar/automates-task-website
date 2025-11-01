@@ -1,15 +1,6 @@
 [
   {
     "ID": "1",
-    "Title_EN": "Block a Excel list of Business Partner in GTS",
-    "Title_DE": "GTS-Geschäftspartner-Sperrliste",
-    "Desc_EN": "The Bot read Excel file content a list of Business partner need to Block in SAP GTS. Login to SAP GTS, enter Tcode, enter Business Partner number to find them in system, add to Negative list with reason then save. Bot will loop this step until end of excel file.",
-    "Desc_DE": "Der Bot liest den Inhalt der Excel-Datei und listet die Geschäftspartner auf, die in SAP GTS gesperrt werden müssen. Melden Sie sich bei SAP GTS an, geben Sie den Tcode und die Geschäftspartnernummer ein, um sie im System zu finden, fügen Sie sie mit Begründung zur Negativliste hinzu und speichern Sie. Der Bot führt diesen Schritt bis zum Ende der Excel-Datei durch.",
-    "Image_URL": "images/process_1.gif",
-    "Video_ID": "-rIv3LZgMDU"
-  },
-  {
-    "ID": "2",
     "Title_EN": "High-Volume Data Entry & Validation",
     "Title_DE": "Hochvolumige Dateneingabe & Validierung",
     "Desc_EN": "Stop wasting time on repetitive data transfer. This bot reads invoices, validates the necessary fields, and inputs the correct data into your CRM/ERP system.",
@@ -18,7 +9,7 @@
     "Video_ID": "abcdefg12345"
   },
   {
-    "ID": "3",
+    "ID": "2",
     "Title_EN": "Web Scraping for Price Monitoring",
     "Title_DE": "Web-Scraping zur Preisüberwachung",
     "Desc_EN": "An RPA solution designed to monitor competitors' websites hourly, extract pricing information, and alert your team when specific price thresholds are crossed.",
